@@ -283,6 +283,77 @@ Durante a operação, o LED branco de status acende quando algum comando está s
 | Software de modelagem      | OpenSCAD                        |
 | Simulador                  | Wokwi                           |
 
+## Tutorial de Uso
+
+Este tutorial explica como preparar e operar o braço robótico de coleta de amostras.
+
+### 1. Preparação do circuito
+
+Antes de ligar o sistema, confira se os componentes estão conectados corretamente:
+
+- Arduino Uno conectado ao computador por cabo USB;
+- botões físicos coloridos conectados aos pinos digitais do Arduino;
+- dois servomotores conectados aos pinos de sinal D9 e D10;
+- LED branco de status conectado ao pino D12 com resistor de 220Ω;
+- fonte externa de 5V conectada à alimentação dos servomotores;
+- GND da fonte externa conectado ao GND do Arduino.
+
+A conexão de GND comum é obrigatória para que os servomotores recebam corretamente os sinais enviados pelo Arduino.
+
+### 2. Envio do código para o Arduino
+
+1. Abra a Arduino IDE.
+2. Abra o arquivo `src/braco_robotico_botoes.ino`.
+3. Conecte o Arduino Uno ao computador.
+4. Em `Tools > Board`, selecione `Arduino Uno`.
+5. Em `Tools > Port`, selecione a porta correspondente ao Arduino.
+6. Clique em `Upload` para enviar o código para a placa.
+
+### 3. Alimentação dos servomotores
+
+Os servomotores devem ser alimentados pela fonte externa de 5V.
+
+A fonte externa não substitui o cabo USB do Arduino. O Arduino continua sendo alimentado pelo computador, enquanto a fonte de 5V alimenta os servomotores.
+
+A ligação correta é:
+
+| Fonte externa 5V | Ligação |
+|---|---|
+| Positivo 5V | Alimentação positiva dos servomotores |
+| GND | GND dos servomotores e GND do Arduino |
+
+### 4. Operação do braço robótico
+
+Após enviar o código e ligar a fonte externa, utilize os botões físicos para controlar o braço.
+
+| Botão | Comando equivalente | Ação |
+|---|---|---|
+| Verde | U | Subir braço |
+| Amarelo | D | Descer braço |
+| Azul | O | Abrir garra |
+| Vermelho | C | Fechar garra |
+
+Durante a operação, o LED branco de status acende quando algum botão está pressionado, indicando que o sistema está executando um comando.
+
+### 5. Funcionamento esperado
+
+- Ao pressionar o botão verde, o servo do braço move a estrutura para cima.
+- Ao pressionar o botão amarelo, o servo do braço move a estrutura para baixo.
+- Ao pressionar o botão azul, o servo da garra abre.
+- Ao pressionar o botão vermelho, o servo da garra fecha.
+- Quando nenhum botão está pressionado, os servos permanecem na última posição e o LED de status fica apagado.
+
+### 6. Observação sobre o Monitor Serial
+
+O enunciado original previa o envio dos comandos `U`, `D`, `O` e `C` pelo Monitor Serial. Nesta montagem física, esses comandos foram representados por botões coloridos, mantendo a mesma lógica de operação:
+
+- `U` foi substituído pelo botão verde;
+- `D` foi substituído pelo botão amarelo;
+- `O` foi substituído pelo botão azul;
+- `C` foi substituído pelo botão vermelho.
+
+Essa adaptação tornou a operação mais visual e próxima de uma interface física de controle.
+
 ## Principais Aprendizados
 
 Durante o desenvolvimento do projeto, foram aplicados conceitos de:
