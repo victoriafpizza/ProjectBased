@@ -1,0 +1,189 @@
+{
+  "version": 1,
+  "author": "Braço Robótico — Docking & Retrieval",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "wokwi-arduino-uno",
+      "id": "uno",
+      "top": 160,
+      "left": 60,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-breadboard",
+      "id": "bb1",
+      "top": 20,
+      "left": 360,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn_amarelo",
+      "top": 80,
+      "left": 400,
+      "attrs": {
+        "color": "yellow",
+        "label": "D"
+      }
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn_azul",
+      "top": 80,
+      "left": 480,
+      "attrs": {
+        "color": "blue",
+        "label": "O"
+      }
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn_verde",
+      "top": 80,
+      "left": 560,
+      "attrs": {
+        "color": "green",
+        "label": "U"
+      }
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn_vermelho",
+      "top": 80,
+      "left": 640,
+      "attrs": {
+        "color": "red",
+        "label": "C"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r_btn_amarelo",
+      "top": 150,
+      "left": 410,
+      "attrs": {
+        "value": "10000"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r_btn_azul",
+      "top": 150,
+      "left": 490,
+      "attrs": {
+        "value": "10000"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r_btn_verde",
+      "top": 150,
+      "left": 570,
+      "attrs": {
+        "value": "10000"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r_btn_vermelho",
+      "top": 150,
+      "left": 650,
+      "attrs": {
+        "value": "10000"
+      }
+    },
+    {
+      "type": "wokwi-servo",
+      "id": "servo_garra",
+      "top": 280,
+      "left": 560,
+      "attrs": {
+        "horn": "single",
+        "label": "Servo Garra"
+      }
+    },
+    {
+      "type": "wokwi-servo",
+      "id": "servo_braco",
+      "top": 400,
+      "left": 560,
+      "attrs": {
+        "horn": "single",
+        "label": "Servo Braço"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led_status",
+      "top": 310,
+      "left": 390,
+      "attrs": {
+        "color": "white",
+        "label": "LED Status"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r_led",
+      "top": 315,
+      "left": 320,
+      "attrs": {
+        "value": "220"
+      }
+    },
+    {
+      "type": "wokwi-vcc",
+      "id": "vcc1",
+      "top": 20,
+      "left": 780,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-gnd",
+      "id": "gnd1",
+      "top": 80,
+      "left": 780,
+      "attrs": {}
+    }
+  ],
+  "connections": [
+    ["uno:5V", "bb1:tp.1", "red", []],
+    ["uno:GND.1", "bb1:tn.1", "black", []],
+
+    ["bb1:tp.1", "vcc1:VCC", "red", []],
+    ["bb1:tn.1", "gnd1:GND", "black", []],
+
+    ["uno:2", "btn_amarelo:2.l", "yellow", []],
+    ["btn_amarelo:1.l", "bb1:tp.5", "red", []],
+    ["btn_amarelo:2.r", "r_btn_amarelo:1", "yellow", []],
+    ["r_btn_amarelo:2", "bb1:tn.5", "black", []],
+
+    ["uno:3", "btn_azul:2.l", "blue", []],
+    ["btn_azul:1.l", "bb1:tp.10", "red", []],
+    ["btn_azul:2.r", "r_btn_azul:1", "blue", []],
+    ["r_btn_azul:2", "bb1:tn.10", "black", []],
+
+    ["uno:4", "btn_verde:2.l", "green", []],
+    ["btn_verde:1.l", "bb1:tp.15", "red", []],
+    ["btn_verde:2.r", "r_btn_verde:1", "green", []],
+    ["r_btn_verde:2", "bb1:tn.15", "black", []],
+
+    ["uno:5", "btn_vermelho:2.l", "red", []],
+    ["btn_vermelho:1.l", "bb1:tp.20", "red", []],
+    ["btn_vermelho:2.r", "r_btn_vermelho:1", "red", []],
+    ["r_btn_vermelho:2", "bb1:tn.20", "black", []],
+
+    ["uno:9", "servo_garra:PWM", "orange", []],
+    ["servo_garra:V+", "bb1:tp.30", "red", []],
+    ["servo_garra:GND", "bb1:tn.30", "black", []],
+
+    ["uno:10", "servo_braco:PWM", "orange", []],
+    ["servo_braco:V+", "bb1:tp.35", "red", []],
+    ["servo_braco:GND", "bb1:tn.35", "black", []],
+
+    ["uno:12", "r_led:1", "blue", []],
+    ["r_led:2", "led_status:A", "blue", []],
+    ["led_status:C", "bb1:tn.40", "black", []]
+  ]
+}
