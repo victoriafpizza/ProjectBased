@@ -4,17 +4,21 @@
 
 Projeto desenvolvido para simular um braço robótico de coleta de amostras, inspirado em aplicações da Indústria Espacial, como manipulação de carga, coleta de materiais e apoio em operações de docking e retrieval em ambientes de microgravidade.
 
+**Integrante:** Victoria Franceschini Pizza - RM550609
+
 ## Descrição do Projeto
 
-Este projeto consiste em um circuito eletrônico com Arduino Uno, quatro botões físicos coloridos, dois servomotores, um LED branco de status, protoboard e fonte externa de 5V para alimentação dos servos.
+Este projeto consiste em um circuito eletrônico com Arduino Uno, quatro botões físicos coloridos, dois servomotores, um LED branco de status, protoboard e fonte externa de 5V para alimentação dos motores.
 
-O sistema foi desenvolvido para simular os movimentos básicos de um braço robótico utilizado em operações espaciais. Cada botão físico representa um comando de controle do braço, permitindo subir, descer, abrir e fechar a garra.
+A proposta original previa que o controle fosse feito pelo Monitor Serial, utilizando comandos como `U`, `D`, `O` e `C`. Na montagem física desenvolvida, esses comandos foram mantidos na lógica do projeto, porém foram representados por botões físicos coloridos. Dessa forma, em vez de digitar os comandos no Monitor Serial, o operador controla o braço robótico pressionando os botões correspondentes.
 
-A proposta original previa o controle por Monitor Serial. Nesta versão física, os comandos foram representados por botões coloridos, tornando a operação mais direta, visual e intuitiva. A lógica dos comandos U, D, O e C foi mantida no funcionamento do circuito.
+Essa adaptação tornou a operação mais intuitiva e próxima de um controle físico real, mantendo a mesma lógica funcional solicitada no enunciado.
 
 ## Objetivo
 
-O objetivo do projeto é demonstrar, de forma prática, o controle de servomotores por meio de botões físicos conectados ao Arduino Uno. A solução simula um braço robótico de coleta de amostras, utilizando alimentação externa para os motores e LED de status para indicar o funcionamento do sistema.
+O objetivo do projeto é demonstrar, de forma prática, o controle de um braço robótico utilizando Arduino Uno, botões físicos, servomotores, LED de status e alimentação externa.
+
+A aplicação simula uma operação de coleta de amostras em ambiente espacial, onde o operador precisa movimentar o braço e controlar a garra para realizar a manipulação de objetos.
 
 ## Conexão com a Indústria Espacial
 
@@ -34,14 +38,38 @@ Neste projeto, o braço robótico representa uma versão didática desse tipo de
 * Jumpers
 * Modelo 3D em OpenSCAD da garra/gripper
 
-## Comandos e Funções
+## Comandos do Sistema
 
-| Botão    | Pino Arduino | Comando | Função       |
-| -------- | -----------: | ------- | ------------ |
-| Amarelo  |           D2 | D       | Descer braço |
-| Azul     |           D3 | O       | Abrir garra  |
-| Verde    |           D4 | U       | Subir braço  |
-| Vermelho |           D5 | C       | Fechar garra |
+A lógica de controle foi baseada nos comandos previstos no enunciado original:
+
+| Comando | Ação         |
+| ------- | ------------ |
+| U       | Subir braço  |
+| D       | Descer braço |
+| O       | Abrir garra  |
+| C       | Fechar garra |
+
+Na versão física, esses comandos são acionados por botões:
+
+| Botão    | Pino Arduino | Comando Representado | Função       |
+| -------- | -----------: | -------------------- | ------------ |
+| Verde    |           D4 | U                    | Subir braço  |
+| Amarelo  |           D2 | D                    | Descer braço |
+| Azul     |           D3 | O                    | Abrir garra  |
+| Vermelho |           D5 | C                    | Fechar garra |
+
+## Justificativa da Adaptação dos Controles
+
+Embora o enunciado original indique o uso do Monitor Serial para envio dos comandos, a montagem física foi adaptada para utilizar botões coloridos. Essa decisão foi tomada para tornar o controle mais visual, direto e semelhante a uma interface física de operação.
+
+Cada botão representa um comando serial original:
+
+* botão verde representa o comando `U`;
+* botão amarelo representa o comando `D`;
+* botão azul representa o comando `O`;
+* botão vermelho representa o comando `C`.
+
+Assim, a lógica de controle permanece equivalente à proposta original, mas a entrada do usuário ocorre por meio de botões físicos conectados ao Arduino.
 
 ## Servomotores
 
@@ -52,11 +80,11 @@ O projeto utiliza dois servomotores:
 | Servo da garra |           D9 | Abrir e fechar a garra |
 | Servo do braço |          D10 | Subir e descer o braço |
 
-Os servos são alimentados por uma fonte externa de 5V, pois motores exigem mais corrente do que o Arduino consegue fornecer diretamente com segurança.
+Os servomotores são responsáveis pelos principais movimentos do braço robótico. Um deles controla o movimento vertical do braço, enquanto o outro controla a abertura e o fechamento da garra.
 
 ## LED de Status
 
-O LED branco atua como indicador visual de funcionamento do sistema. Ele é acionado quando algum botão é pressionado e o sistema está executando um comando.
+O LED branco atua como indicador visual de funcionamento do sistema. Ele acende quando algum botão é pressionado e o Arduino está executando um comando.
 
 | Componente  | Ligação                 |
 | ----------- | ----------------------- |
@@ -65,11 +93,15 @@ O LED branco atua como indicador visual de funcionamento do sistema. Ele é acio
 | Pino do LED | D12                     |
 | GND         | Terra comum do circuito |
 
+O resistor de 220Ω foi utilizado para limitar a corrente elétrica e proteger o LED.
+
 ## Alimentação do Sistema
 
-A alimentação dos servomotores é feita por uma fonte externa de 5V. A protoboard é utilizada como barramento de distribuição de energia, organizando os pontos de 5V e GND dos servomotores.
+Os servomotores são alimentados por uma fonte externa de 5V. Essa escolha foi feita porque servomotores podem exigir mais corrente do que o Arduino consegue fornecer diretamente com segurança.
 
-É importante destacar que o GND da fonte externa precisa estar conectado ao GND do Arduino. Essa conexão cria uma referência elétrica comum, permitindo que os sinais enviados pelo Arduino sejam interpretados corretamente pelos servomotores.
+A protoboard foi utilizada como barramento de distribuição de energia, organizando as conexões de 5V e GND dos servomotores.
+
+É importante destacar que o GND da fonte externa deve estar conectado ao GND do Arduino. Essa conexão cria uma referência elétrica comum entre Arduino, fonte e servos, permitindo que os sinais enviados pelo Arduino sejam interpretados corretamente pelos motores.
 
 Resumo da alimentação:
 
@@ -86,7 +118,7 @@ O funcionamento do sistema ocorre da seguinte forma:
 
 1. O usuário pressiona um dos botões físicos coloridos.
 2. O Arduino Uno lê o sinal do botão pressionado.
-3. O código identifica qual comando foi enviado.
+3. O código identifica qual comando foi acionado.
 4. O LED branco de status acende durante a execução do comando.
 5. O Arduino envia o sinal para o servomotor correspondente.
 6. O servo do braço ou o servo da garra se movimenta.
@@ -122,6 +154,27 @@ LED de status
 Indicação visual de funcionamento do sistema
 ```
 
+## Simulador
+
+O arquivo `diagram.json`, localizado na pasta `/simulator`, representa o circuito no ambiente Wokwi.
+
+Esse arquivo descreve uma versão simulada do circuito eletrônico, com Arduino Uno, botões, servomotores, LED de status, resistor e conexões principais.
+
+**Link público do simulador:** inserir aqui o link público do Wokwi ou Tinkercad.
+
+## Modelagem 3D
+
+A modelagem 3D foi desenvolvida no OpenSCAD. O modelo representa uma garra/gripper do braço robótico, criada de forma paramétrica para permitir ajustes de tamanho e proporção.
+
+O arquivo nativo do modelo está na pasta `/model`.
+
+Arquivos da modelagem:
+
+* `braco_robotico_gripper.scad`: arquivo nativo do OpenSCAD;
+* `braco_robotico_gripper.stl`: arquivo exportado em formato STL.
+
+O modelo 3D complementa a proposta física do projeto, representando a estrutura de manipulação da garra robótica.
+
 ## Estrutura do Repositório
 
 ```txt
@@ -133,7 +186,12 @@ PBMK/
 │   └── braco_robotico_botoes.ino
 │
 ├── model/
-│   └── braco_robotico_gripper.scad
+│   ├── braco_robotico_gripper.scad
+│   └── braco_robotico_gripper.stl
+│
+├── images/
+│   ├── circuito_simulador.png
+│   └── modelo_3d_render.png
 │
 └── simulator/
     └── diagram.json
@@ -143,7 +201,7 @@ PBMK/
 
 ### `README.md`
 
-Arquivo principal de documentação do projeto. Contém a explicação geral da proposta, os componentes utilizados, a lógica de funcionamento, a pinagem, a alimentação do sistema, a organização do repositório e as observações da entrega.
+Arquivo principal de documentação do projeto. Contém a explicação geral da proposta, os componentes utilizados, a lógica de funcionamento, a pinagem, a alimentação do sistema, a modelagem 3D e a organização do repositório.
 
 ### `src/braco_robotico_botoes.ino`
 
@@ -152,51 +210,26 @@ Arquivo principal do código Arduino.
 Esse código é responsável por:
 
 * ler os quatro botões físicos coloridos;
-* identificar os comandos D, O, U e C;
+* identificar os comandos equivalentes a `U`, `D`, `O` e `C`;
 * controlar os dois servomotores;
 * acionar o LED branco de status;
 * movimentar o braço e a garra de acordo com o botão pressionado.
 
-Mapeamento usado no código:
-
-| Elemento       | Pino |
-| -------------- | ---: |
-| Botão amarelo  |   D2 |
-| Botão azul     |   D3 |
-| Botão verde    |   D4 |
-| Botão vermelho |   D5 |
-| Servo da garra |   D9 |
-| Servo do braço |  D10 |
-| LED de status  |  D12 |
-
 ### `model/braco_robotico_gripper.scad`
 
-Arquivo de modelagem 3D desenvolvido no OpenSCAD.
+Arquivo de modelagem 3D desenvolvido no OpenSCAD. Representa a garra/gripper do braço robótico e pode ser editado para ajustes de dimensões e proporções.
 
-Ele representa a peça da garra/gripper do braço robótico. O modelo foi criado de forma paramétrica, utilizando variáveis para permitir ajustes de tamanho, proporção e encaixe. Esse arquivo corresponde ao projeto nativo da modelagem 3D.
+### `model/braco_robotico_gripper.stl`
 
-O arquivo `.scad` pode ser aberto no OpenSCAD para visualização, edição e exportação.
-
-### Arquivo `.stl`
-
-O modelo 3D pode ser exportado pelo OpenSCAD no formato `.stl`.
-
-Caso o arquivo `.stl` esteja presente na pasta `model`, ele representa a versão exportada do modelo 3D, pronta para visualização em softwares 3D ou eventual impressão.
-
-Para gerar o STL no OpenSCAD:
-
-1. Abrir o arquivo `braco_robotico_gripper.scad`.
-2. Pressionar `F6` para renderizar.
-3. Acessar `File > Export > Export as STL`.
-4. Salvar o arquivo na pasta `model`.
+Arquivo exportado em formato STL a partir do OpenSCAD. Esse formato permite visualização em softwares 3D e eventual impressão da peça.
 
 ### `simulator/diagram.json`
 
-Arquivo utilizado pelo simulador Wokwi.
+Arquivo utilizado pelo simulador Wokwi. Ele descreve a estrutura do circuito simulado, incluindo Arduino Uno, botões, servomotores, LED, resistor e conexões principais.
 
-Ele descreve a estrutura do circuito simulado, incluindo Arduino Uno, botões, servomotores, LED, resistor e conexões principais. Esse arquivo funciona como uma representação virtual do circuito eletrônico.
+### `/images`
 
-A montagem física final utiliza Arduino Uno, quatro botões físicos, dois servomotores, LED de status, protoboard e fonte externa de 5V para alimentação dos servos. O arquivo `diagram.json` é utilizado como apoio para representar o circuito no ambiente de simulação.
+Pasta destinada às imagens do projeto, como render do modelo 3D e captura de tela do circuito simulado.
 
 ## Vídeo de Funcionamento
 
@@ -212,7 +245,7 @@ No vídeo, é possível visualizar:
 * a fonte externa de 5V;
 * o funcionamento dos comandos do braço robótico.
 
-O vídeo foi escolhido como principal evidência visual da montagem física e do funcionamento do projeto.
+O vídeo foi escolhido como evidência visual complementar da montagem física e do funcionamento do sistema.
 
 ## Como Executar o Código
 
@@ -225,13 +258,30 @@ O vídeo foi escolhido como principal evidência visual da montagem física e do
 7. Garantir que o GND da fonte externa esteja conectado ao GND do Arduino.
 8. Pressionar os botões físicos para controlar o braço.
 
-## Observações Importantes
+## Guia de Operação
 
-* Os servomotores devem ser alimentados pela fonte externa de 5V.
-* O GND da fonte externa precisa estar conectado ao GND do Arduino.
-* O LED branco possui resistor de 220Ω para limitar a corrente.
-* A protoboard foi usada para organizar as conexões e distribuir a alimentação.
-* O código final da montagem física utiliza botões físicos coloridos em vez de controle exclusivo pelo Monitor Serial.
+Para operar o braço robótico:
+
+| Ação desejada | Botão    |
+| ------------- | -------- |
+| Subir braço   | Verde    |
+| Descer braço  | Amarelo  |
+| Abrir garra   | Azul     |
+| Fechar garra  | Vermelho |
+
+Durante a operação, o LED branco de status acende quando algum comando está sendo executado.
+
+## Especificações Técnicas
+
+| Item                       | Especificação                   |
+| -------------------------- | ------------------------------- |
+| Placa principal            | Arduino Uno                     |
+| Quantidade de servomotores | 2                               |
+| Alimentação dos servos     | Fonte externa 5V                |
+| LED de status              | LED branco com resistor de 220Ω |
+| Entrada de controle        | Botões físicos coloridos        |
+| Software de modelagem      | OpenSCAD                        |
+| Simulador                  | Wokwi                           |
 
 ## Principais Aprendizados
 
@@ -251,6 +301,6 @@ Durante o desenvolvimento do projeto, foram aplicados conceitos de:
 
 O projeto demonstrou a construção de um sistema robótico funcional voltado à simulação de coleta de amostras em um contexto espacial. A solução utiliza Arduino Uno, quatro botões físicos coloridos, dois servomotores, LED de status, protoboard e fonte externa de 5V.
 
-A montagem eletrônica foi desenvolvida manualmente, com foco na integração entre hardware, programação e organização do circuito. O modelo 3D em OpenSCAD complementa a entrega, representando a garra do braço robótico de forma paramétrica.
+Embora o enunciado original previsse o uso do Monitor Serial, a solução física foi adaptada para botões coloridos, mantendo a equivalência dos comandos `U`, `D`, `O` e `C`. Essa adaptação tornou o controle mais intuitivo e adequado à montagem prática realizada.
 
 O resultado final é uma solução prática e didática de manipulação robótica, conectada ao tema de operações espaciais, docking, retrieval e microgravidade.
