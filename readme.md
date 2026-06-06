@@ -6,213 +6,232 @@ Projeto desenvolvido para simular um braço robótico de coleta de amostras, ins
 
 ## Descrição do Projeto
 
-Este projeto consiste em um braço robótico físico controlado por um Joystick Shield V1.A. O sistema utiliza placas Arduino para interpretar os comandos do operador e acionar dois servomotores responsáveis pelos principais movimentos do braço.
+Este projeto consiste em um circuito eletrônico com Arduino Uno, quatro botões físicos coloridos, dois servomotores, um LED branco de status, protoboard e fonte externa de 5V para alimentação dos servos.
 
-A proposta original previa o controle por Monitor Serial. Porém, durante o desenvolvimento físico, o projeto foi adaptado para utilizar um Joystick Shield, tornando o controle mais intuitivo e próximo de uma operação real. Assim, os comandos digitais foram substituídos por movimentos e botões físicos do joystick.
+O sistema foi desenvolvido para simular os movimentos básicos de um braço robótico utilizado em operações espaciais. Cada botão físico representa um comando de controle do braço, permitindo subir, descer, abrir e fechar a garra.
 
-O braço robótico realiza duas funções principais:
-
-* giro da base;
-* movimento de levantar e abaixar a estrutura da garra.
-
-Além disso, o circuito possui um LED branco de status, ligado com resistor de 220Ω, para indicar o funcionamento do sistema.
+A proposta original previa o controle por Monitor Serial. Nesta versão física, os comandos foram representados por botões coloridos, tornando a operação mais direta, visual e intuitiva. A lógica dos comandos U, D, O e C foi mantida no funcionamento do circuito.
 
 ## Objetivo
 
-O objetivo do projeto é demonstrar, de forma prática, o controle de um braço robótico utilizando Arduino, servomotores, alimentação externa e interface física de comando. A aplicação simula uma operação de coleta de amostras em ambiente espacial, onde o operador precisa manipular uma garra robótica com precisão.
+O objetivo do projeto é demonstrar, de forma prática, o controle de servomotores por meio de botões físicos conectados ao Arduino Uno. A solução simula um braço robótico de coleta de amostras, utilizando alimentação externa para os motores e LED de status para indicar o funcionamento do sistema.
 
 ## Conexão com a Indústria Espacial
 
-Braços robóticos são utilizados em missões espaciais para manutenção de satélites, movimentação de cargas, coleta de amostras, apoio a astronautas e manipulação de objetos em microgravidade.
+Braços robóticos são utilizados em missões espaciais para manutenção de satélites, movimentação de cargas, coleta de amostras, apoio a astronautas e manipulação de objetos em ambientes de microgravidade.
 
-Neste projeto, o braço robótico representa uma versão didática desse tipo de sistema, permitindo simular movimentos de aproximação e manipulação de uma amostra por meio de servomotores controlados eletronicamente.
+Neste projeto, o braço robótico representa uma versão didática desse tipo de sistema, permitindo simular movimentos de aproximação, captura e manipulação de uma amostra por meio de servomotores controlados eletronicamente.
 
 ## Componentes Utilizados
 
 * Arduino Uno
-* Arduino Mega
-* Joystick Shield V1.A
+* 4 botões físicos coloridos
 * 2 servomotores
 * 1 LED branco de status
 * 1 resistor de 220Ω para o LED
-* Fonte externa 5V
+* Fonte externa de 5V para alimentação dos servomotores
 * Protoboard
 * Jumpers
-* Estrutura física de braço robótico em acrílico
-* 2 computadores utilizados durante montagem, testes e programação
+* Modelo 3D em OpenSCAD da garra/gripper
 
-## Estrutura Física do Braço
+## Comandos e Funções
 
-A estrutura física do braço robótico foi adquirida pronta em acrílico por meio de compra online. A decisão foi tomada porque não havia condições adequadas para modelagem e impressão das peças em 3D dentro do prazo disponível do projeto. Apesar disso, toda a montagem eletrônica, ligação dos componentes, integração dos servomotores, conexão da alimentação externa e testes de funcionamento foram realizados manualmente.
+| Botão    | Pino Arduino | Comando | Função       |
+| -------- | -----------: | ------- | ------------ |
+| Amarelo  |           D2 | D       | Descer braço |
+| Azul     |           D3 | O       | Abrir garra  |
+| Verde    |           D4 | U       | Subir braço  |
+| Vermelho |           D5 | C       | Fechar garra |
 
-## Função dos Servomotores
+## Servomotores
 
-O projeto utiliza dois servomotores, cada um responsável por uma parte do movimento do braço:
+O projeto utiliza dois servomotores:
 
-| Servo   | Função                                |
-| ------- | ------------------------------------- |
-| Servo 1 | Gira a base do braço robótico         |
-| Servo 2 | Levanta e abaixa a estrutura da garra |
+| Servo          | Pino Arduino | Função                 |
+| -------------- | -----------: | ---------------------- |
+| Servo da garra |           D9 | Abrir e fechar a garra |
+| Servo do braço |          D10 | Subir e descer o braço |
 
-Essa divisão permite controlar os principais movimentos necessários para simular a manipulação de uma amostra.
-
-## Controle por Joystick Shield
-
-O controle do braço robótico é feito por meio do Joystick Shield V1.A. O joystick funciona como interface física de comando, permitindo controlar os movimentos do braço de forma mais prática do que pelo Monitor Serial.
-
-A proposta inicial do trabalho previa comandos como:
-
-| Comando original | Ação   |
-| ---------------- | ------ |
-| U                | Subir  |
-| D                | Descer |
-| O                | Abrir  |
-| C                | Fechar |
-
-Na versão física desenvolvida, esses comandos foram adaptados para o Joystick Shield:
-
-| Controle físico                     | Ação no braço                                       |
-| ----------------------------------- | --------------------------------------------------- |
-| Movimento lateral do joystick       | Controle do giro da base                            |
-| Movimento vertical do joystick      | Controle de levantar e abaixar a estrutura da garra |
-| Botões do shield                    | Apoio aos comandos e testes do sistema              |
-| Comandos interpretados pelo Arduino | Acionamento dos servomotores                        |
-
-## Comunicação entre Arduinos
-
-O sistema utiliza duas placas Arduino: Arduino Uno e Arduino Mega.
-
-O Arduino Uno é responsável por receber e interpretar os sinais do Joystick Shield. Em seguida, os comandos são enviados para o Arduino Mega por comunicação serial.
-
-A comunicação entre as placas é feita utilizando os pinos de transmissão e recepção serial. A lógica correta de comunicação serial utiliza conexão cruzada:
-
-| Comunicação     | Ligação                   |
-| --------------- | ------------------------- |
-| TX de uma placa | RX da outra placa         |
-| RX de uma placa | TX da outra placa         |
-| GND             | GND comum entre as placas |
-
-No projeto, o Arduino Mega recebe os comandos interpretados e aciona os servomotores responsáveis pelos movimentos do braço robótico.
-
-## Alimentação do Sistema
-
-Os servomotores são alimentados por uma fonte externa de 5V. Essa decisão foi tomada porque servomotores exigem mais corrente do que a fornecida diretamente pelas placas Arduino, principalmente quando mais de um motor é utilizado no circuito.
-
-A protoboard foi utilizada como barramento de distribuição de energia, permitindo organizar as conexões de 5V e GND entre a fonte externa e os servomotores.
-
-É importante destacar que todos os terras do circuito precisam estar conectados em comum:
-
-* GND da fonte externa;
-* GND do Arduino Uno;
-* GND do Arduino Mega;
-* GND dos servomotores.
-
-Essa referência comum é necessária para que os sinais enviados pelos Arduinos sejam interpretados corretamente pelos servomotores.
+Os servos são alimentados por uma fonte externa de 5V, pois motores exigem mais corrente do que o Arduino consegue fornecer diretamente com segurança.
 
 ## LED de Status
 
-O projeto possui um LED branco utilizado como indicador de status do sistema. O LED foi ligado com um resistor de 220Ω, garantindo proteção contra excesso de corrente.
+O LED branco atua como indicador visual de funcionamento do sistema. Ele é acionado quando algum botão é pressionado e o sistema está executando um comando.
 
-A função do LED é indicar visualmente que o circuito está energizado ou em operação, auxiliando na identificação do estado do sistema durante os testes.
+| Componente  | Ligação                 |
+| ----------- | ----------------------- |
+| LED branco  | Indicador de status     |
+| Resistor    | 220Ω                    |
+| Pino do LED | D12                     |
+| GND         | Terra comum do circuito |
 
-Ligação básica do LED:
+## Alimentação do Sistema
 
-| Componente           | Ligação                               |
-| -------------------- | ------------------------------------- |
-| LED branco           | Indicador de status                   |
-| Resistor             | 220Ω                                  |
-| Pino positivo do LED | Ligado ao Arduino através do resistor |
-| Pino negativo do LED | Ligado ao GND                         |
+A alimentação dos servomotores é feita por uma fonte externa de 5V. A protoboard é utilizada como barramento de distribuição de energia, organizando os pontos de 5V e GND dos servomotores.
 
-## Uso da Protoboard
+É importante destacar que o GND da fonte externa precisa estar conectado ao GND do Arduino. Essa conexão cria uma referência elétrica comum, permitindo que os sinais enviados pelo Arduino sejam interpretados corretamente pelos servomotores.
 
-A protoboard foi utilizada para organizar o circuito e distribuir a alimentação dos servomotores. Ela atua como uma base de conexão entre a fonte externa, os fios dos servos e os pontos de GND comum.
+Resumo da alimentação:
 
-A protoboard não gera energia por si mesma. Ela apenas distribui a energia recebida da fonte 5V e organiza os pontos de conexão entre os componentes.
+| Item             | Função                                            |
+| ---------------- | ------------------------------------------------- |
+| Arduino Uno      | Controle lógico do circuito                       |
+| Fonte externa 5V | Alimentação dos servomotores                      |
+| Protoboard       | Distribuição de 5V e GND                          |
+| GND comum        | Referência elétrica entre Arduino, fonte e servos |
 
 ## Funcionamento Geral
 
 O funcionamento do sistema ocorre da seguinte forma:
 
-1. O operador movimenta o joystick ou pressiona os botões do Joystick Shield.
-2. O Arduino Uno interpreta os comandos recebidos pelo shield.
-3. O Arduino Uno envia os comandos para o Arduino Mega por comunicação serial.
-4. O Arduino Mega processa os comandos recebidos.
-5. O Arduino Mega aciona os servomotores.
-6. Os servos movimentam a base e levantam ou abaixam a estrutura da garra.
-7. O LED de status indica o funcionamento do sistema.
+1. O usuário pressiona um dos botões físicos coloridos.
+2. O Arduino Uno lê o sinal do botão pressionado.
+3. O código identifica qual comando foi enviado.
+4. O LED branco de status acende durante a execução do comando.
+5. O Arduino envia o sinal para o servomotor correspondente.
+6. O servo do braço ou o servo da garra se movimenta.
+7. Quando nenhum botão está pressionado, o LED permanece apagado.
 
 ## Fluxo de Funcionamento
 
-![Fluxo de Funcionamento](images/fluxo_funcionamento.png)
-
-O funcionamento do sistema começa no Joystick Shield V1.A, que atua como interface de controle do operador. O Arduino Uno recebe os comandos do joystick e dos botões, interpreta esses sinais e envia as informações para o Arduino Mega por comunicação serial. O Arduino Mega é responsável por acionar os dois servomotores do braço robótico, controlando o giro da base e o movimento de levantar e abaixar a garra. Os servomotores são alimentados por uma fonte externa de 5V, distribuída pela protoboard, enquanto todos os GNDs do circuito são conectados em comum para garantir a referência elétrica correta entre fonte, Arduinos e motores. O LED branco de status, ligado com resistor de 220Ω, funciona como indicação visual de operação do sistema.
-
-## Código-Fonte
-
-Os códigos-fonte utilizados no projeto estão na pasta `/src`.
-
-Como o sistema utiliza duas placas Arduino, o repositório pode conter dois arquivos separados:
-
-* código do Arduino Uno, responsável pela leitura do Joystick Shield;
-* código do Arduino Mega, responsável pelo acionamento dos servomotores.
-
-Estrutura sugerida:
-
 ```txt
-src/
-├── codigo_arduino_uno.ino
-└── codigo_arduino_mega.ino
+Botões físicos coloridos
+      ↓
+Arduino Uno
+      ↓
+Leitura dos comandos U, D, O e C
+      ↓
+Acionamento dos servomotores
+      ↓
+Movimento do braço robótico
+
+Fonte externa 5V
+      ↓
+Protoboard
+      ↓
+Alimentação dos servomotores
+
+GND comum
+      ↓
+GND da fonte externa conectado ao GND do Arduino
+      ↓
+Referência elétrica comum para funcionamento correto dos sinais
+
+LED de status
+      ↓
+Indicação visual de funcionamento do sistema
 ```
 
-## Imagens do Projeto
-
-As imagens da montagem física, do braço robótico, do circuito eletrônico e dos testes de funcionamento estão disponíveis na pasta `/images`.
-
-As imagens documentam:
-
-* estrutura física do braço;
-* ligação dos servomotores;
-* uso da protoboard;
-* conexão dos Arduinos;
-* Joystick Shield;
-* fonte externa de 5V;
-* LED de status;
-* fluxo de funcionamento do sistema.
-
-Estrutura sugerida:
+## Estrutura do Repositório
 
 ```txt
-images/
-├── circuito_montado.jpg
-├── braco_robotico.jpg
-├── joystick_shield.jpg
-├── fonte_5v.jpg
-├── led_status.jpg
-└── fluxo_funcionamento.png
-```
-
-## Organização do Repositório
-
-O repositório está organizado da seguinte forma:
-
-```txt
-braco-robotico-docking-retrieval/
+PBMK/
 │
 ├── README.md
 │
 ├── src/
-│   ├── codigo_arduino_uno.ino
-│   └── codigo_arduino_mega.ino
+│   └── braco_robotico_botoes.ino
 │
-└── images/
-    ├── circuito_montado.jpg
-    ├── braco_robotico.jpg
-    ├── joystick_shield.jpg
-    ├── fonte_5v.jpg
-    ├── led_status.jpg
-    └── fluxo_funcionamento.png
+├── model/
+│   └── braco_robotico_gripper.scad
+│
+└── simulator/
+    └── diagram.json
 ```
+
+## Explicação dos Arquivos
+
+### `README.md`
+
+Arquivo principal de documentação do projeto. Contém a explicação geral da proposta, os componentes utilizados, a lógica de funcionamento, a pinagem, a alimentação do sistema, a organização do repositório e as observações da entrega.
+
+### `src/braco_robotico_botoes.ino`
+
+Arquivo principal do código Arduino.
+
+Esse código é responsável por:
+
+* ler os quatro botões físicos coloridos;
+* identificar os comandos D, O, U e C;
+* controlar os dois servomotores;
+* acionar o LED branco de status;
+* movimentar o braço e a garra de acordo com o botão pressionado.
+
+Mapeamento usado no código:
+
+| Elemento       | Pino |
+| -------------- | ---: |
+| Botão amarelo  |   D2 |
+| Botão azul     |   D3 |
+| Botão verde    |   D4 |
+| Botão vermelho |   D5 |
+| Servo da garra |   D9 |
+| Servo do braço |  D10 |
+| LED de status  |  D12 |
+
+### `model/braco_robotico_gripper.scad`
+
+Arquivo de modelagem 3D desenvolvido no OpenSCAD.
+
+Ele representa a peça da garra/gripper do braço robótico. O modelo foi criado de forma paramétrica, utilizando variáveis para permitir ajustes de tamanho, proporção e encaixe. Esse arquivo corresponde ao projeto nativo da modelagem 3D.
+
+O arquivo `.scad` pode ser aberto no OpenSCAD para visualização, edição e exportação.
+
+### Arquivo `.stl`
+
+O modelo 3D pode ser exportado pelo OpenSCAD no formato `.stl`.
+
+Caso o arquivo `.stl` esteja presente na pasta `model`, ele representa a versão exportada do modelo 3D, pronta para visualização em softwares 3D ou eventual impressão.
+
+Para gerar o STL no OpenSCAD:
+
+1. Abrir o arquivo `braco_robotico_gripper.scad`.
+2. Pressionar `F6` para renderizar.
+3. Acessar `File > Export > Export as STL`.
+4. Salvar o arquivo na pasta `model`.
+
+### `simulator/diagram.json`
+
+Arquivo utilizado pelo simulador Wokwi.
+
+Ele descreve a estrutura do circuito simulado, incluindo Arduino Uno, botões, servomotores, LED, resistor e conexões principais. Esse arquivo funciona como uma representação virtual do circuito eletrônico.
+
+A montagem física final utiliza Arduino Uno, quatro botões físicos, dois servomotores, LED de status, protoboard e fonte externa de 5V para alimentação dos servos. O arquivo `diagram.json` é utilizado como apoio para representar o circuito no ambiente de simulação.
+
+## Vídeo de Funcionamento
+
+O vídeo de funcionamento do circuito físico será anexado diretamente na plataforma de entrega.
+
+No vídeo, é possível visualizar:
+
+* a montagem real do circuito;
+* o Arduino Uno conectado à protoboard;
+* os quatro botões físicos coloridos;
+* o LED branco de status;
+* os dois servomotores;
+* a fonte externa de 5V;
+* o funcionamento dos comandos do braço robótico.
+
+O vídeo foi escolhido como principal evidência visual da montagem física e do funcionamento do projeto.
+
+## Como Executar o Código
+
+1. Abrir o arquivo `src/braco_robotico_botoes.ino` na Arduino IDE.
+2. Conectar o Arduino Uno ao computador.
+3. Selecionar a placa `Arduino Uno`.
+4. Selecionar a porta correta.
+5. Enviar o código para a placa.
+6. Alimentar os servomotores com a fonte externa de 5V.
+7. Garantir que o GND da fonte externa esteja conectado ao GND do Arduino.
+8. Pressionar os botões físicos para controlar o braço.
+
+## Observações Importantes
+
+* Os servomotores devem ser alimentados pela fonte externa de 5V.
+* O GND da fonte externa precisa estar conectado ao GND do Arduino.
+* O LED branco possui resistor de 220Ω para limitar a corrente.
+* A protoboard foi usada para organizar as conexões e distribuir a alimentação.
+* O código final da montagem física utiliza botões físicos coloridos em vez de controle exclusivo pelo Monitor Serial.
 
 ## Principais Aprendizados
 
@@ -220,14 +239,18 @@ Durante o desenvolvimento do projeto, foram aplicados conceitos de:
 
 * robótica básica;
 * controle de servomotores;
-* comunicação serial entre placas Arduino;
+* entradas digitais com botões;
 * alimentação externa para motores;
 * uso de protoboard como barramento de energia;
-* montagem física de circuito eletrônico;
-* integração entre hardware, software e estrutura mecânica.
+* GND comum entre fonte externa e Arduino;
+* LED de status com resistor;
+* modelagem 3D em OpenSCAD;
+* documentação técnica em GitHub.
 
 ## Considerações Finais
 
-O projeto demonstrou a construção de um braço robótico funcional voltado à simulação de coleta de amostras em um contexto espacial. A solução foi desenvolvida com estrutura física em acrílico, controle por Joystick Shield, dois servomotores, comunicação entre Arduino Uno e Arduino Mega, LED de status e alimentação externa de 5V.
+O projeto demonstrou a construção de um sistema robótico funcional voltado à simulação de coleta de amostras em um contexto espacial. A solução utiliza Arduino Uno, quatro botões físicos coloridos, dois servomotores, LED de status, protoboard e fonte externa de 5V.
 
-Apesar da estrutura mecânica ter sido adquirida pronta, toda a integração eletrônica, montagem do circuito, conexão dos servomotores, organização da alimentação e funcionamento do sistema foram realizados manualmente. O resultado final representa uma solução prática e didática de manipulação robótica, conectada ao tema de operações espaciais e microgravidade.
+A montagem eletrônica foi desenvolvida manualmente, com foco na integração entre hardware, programação e organização do circuito. O modelo 3D em OpenSCAD complementa a entrega, representando a garra do braço robótico de forma paramétrica.
+
+O resultado final é uma solução prática e didática de manipulação robótica, conectada ao tema de operações espaciais, docking, retrieval e microgravidade.
