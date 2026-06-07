@@ -4,7 +4,9 @@
 
 Projeto desenvolvido para simular um braço robótico de coleta de amostras, inspirado em aplicações da Indústria Espacial, como manipulação de carga, coleta de materiais e apoio em operações de docking e retrieval em ambientes de microgravidade.
 
-**Integrante:** Victoria Franceschini Pizza - RM550609
+**Integrantes:** 
+- Victoria Franceschini Pizza - RM550609
+- Lourenzo Ramos - RM99951
 
 ## Descrição do Projeto
 
