@@ -3,8 +3,8 @@
 ## Identificação
 
 Projeto desenvolvido para simular um braço robótico de coleta de amostras, inspirado em aplicações da Indústria Espacial, como manipulação de carga, coleta de materiais e apoio em operações de docking e retrieval em ambientes de microgravidade. Por:
-Victoria Franceschini Pízza - 550609
-Lourenzo Ramos - 99951
+- Victoria Franceschini Pízza - 550609
+- Lourenzo Ramos - 99951
 
 ## Descrição do Projeto
 
