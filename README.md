@@ -162,8 +162,6 @@ O arquivo `diagram.json`, localizado na pasta `/simulator`, representa o circuit
 
 Esse arquivo descreve uma versão simulada do circuito eletrônico, com Arduino Uno, botões, servomotores, LED de status, resistor e conexões principais.
 
-O modelo 3D complementa a proposta física do projeto, representando a estrutura de manipulação da garra robótica.
-
 ## Estrutura do Repositório
 
 ```txt
@@ -174,9 +172,6 @@ PBMK/
 ├── src/
 │   └── braco_robotico_botoes.ino
 │
-├── model/
-│   ├── braco_robotico_gripper.scad
-│   └── braco_robotico_gripper.stl
 │
 ├── images/
 │   ├── circuito_simulador.png
@@ -204,21 +199,9 @@ Esse código é responsável por:
 * acionar o LED branco de status;
 * movimentar o braço e a garra de acordo com o botão pressionado.
 
-### `model/braco_robotico_gripper.scad`
-
-Arquivo de modelagem 3D desenvolvido no OpenSCAD. Representa a garra/gripper do braço robótico e pode ser editado para ajustes de dimensões e proporções.
-
-### `model/braco_robotico_gripper.stl`
-
-Arquivo exportado em formato STL a partir do OpenSCAD. Esse formato permite visualização em softwares 3D e eventual impressão da peça.
-
-### `simulator/diagram.json`
-
-Arquivo utilizado pelo simulador Wokwi. Ele descreve a estrutura do circuito simulado, incluindo Arduino Uno, botões, servomotores, LED, resistor e conexões principais.
-
 ### `/images`
 
-Pasta destinada às imagens do projeto, como render do modelo 3D e captura de tela do circuito simulado.
+Pasta destinada às imagens do projeto: captura de tela do circuito simulado.
 
 ## Vídeo de Funcionamento
 
@@ -253,10 +236,10 @@ Para operar o braço robótico:
 
 | Ação desejada | Botão    |
 | ------------- | -------- |
-| Subir braço   | Verde    |
-| Descer braço  | Amarelo  |
-| Abrir garra   | Azul     |
-| Fechar garra  | Vermelho |
+| Subir braço   | 4        |
+| Descer braço  | 2        |
+| Abrir garra   | 3        |
+| Fechar garra  | 5        |
 
 Durante a operação, o LED branco de status acende quando algum comando está sendo executado.
 
@@ -268,9 +251,7 @@ Durante a operação, o LED branco de status acende quando algum comando está s
 | Quantidade de servomotores | 2                               |
 | Alimentação dos servos     | Fonte externa 5V                |
 | LED de status              | LED branco com resistor de 220Ω |
-| Entrada de controle        | Botões físicos coloridos        |
-| Software de modelagem      | OpenSCAD                        |
-| Simulador                  | Wokwi                           |
+| Entrada de controle        | Potenciometros                  |
 
 ## Tutorial de Uso
 
@@ -281,7 +262,7 @@ Este tutorial explica como preparar e operar o braço robótico de coleta de amo
 Antes de ligar o sistema, confira se os componentes estão conectados corretamente:
 
 - Arduino Uno conectado ao computador por cabo USB;
-- botões físicos coloridos conectados aos pinos digitais do Arduino;
+- Potenciometros conectados aos pinos digitais do Arduino;
 - dois servomotores conectados aos pinos de sinal D9 e D10;
 - LED branco de status conectado ao pino D12 com resistor de 220Ω;
 - fonte externa de 5V conectada à alimentação dos servomotores;
@@ -317,29 +298,21 @@ Após enviar o código e ligar a fonte externa, utilize os botões físicos para
 
 | Botão | Comando equivalente | Ação |
 |---|---|---|
-| Verde | U | Subir braço |
-| Amarelo | D | Descer braço |
-| Azul | O | Abrir garra |
-| Vermelho | C | Fechar garra |
+| 4 | U | Subir braço |
+| 2 | D | Descer braço |
+| 3 | O | Abrir garra |
+| 5 | C | Fechar garra |
 
 Durante a operação, o LED branco de status acende quando algum botão está pressionado, indicando que o sistema está executando um comando.
-
-### 5. Funcionamento esperado
-
-- Ao pressionar o botão verde, o servo do braço move a estrutura para cima.
-- Ao pressionar o botão amarelo, o servo do braço move a estrutura para baixo.
-- Ao pressionar o botão azul, o servo da garra abre.
-- Ao pressionar o botão vermelho, o servo da garra fecha.
-- Quando nenhum botão está pressionado, os servos permanecem na última posição e o LED de status fica apagado.
 
 ### 6. Observação sobre o Monitor Serial
 
 O enunciado original previa o envio dos comandos `U`, `D`, `O` e `C` pelo Monitor Serial. Nesta montagem física, esses comandos foram representados por botões coloridos, mantendo a mesma lógica de operação:
 
-- `U` foi substituído pelo botão verde;
-- `D` foi substituído pelo botão amarelo;
-- `O` foi substituído pelo botão azul;
-- `C` foi substituído pelo botão vermelho.
+- `U` foi substituído pelo potenciometro 4;
+- `D` foi substituído pelo potenciometro 2;
+- `O` foi substituído pelo potenciometro 3;
+- `C` foi substituído pelo potenciometro 5
 
 Essa adaptação tornou a operação mais visual e próxima de uma interface física de controle.
 
@@ -349,7 +322,7 @@ Durante o desenvolvimento do projeto, foram aplicados conceitos de:
 
 * robótica básica;
 * controle de servomotores;
-* entradas digitais com botões;
+* entradas digitais com potenciometros;
 * alimentação externa para motores;
 * uso de protoboard como barramento de energia;
 * GND comum entre fonte externa e Arduino;
@@ -361,6 +334,6 @@ Durante o desenvolvimento do projeto, foram aplicados conceitos de:
 
 O projeto demonstrou a construção de um sistema robótico funcional voltado à simulação de coleta de amostras em um contexto espacial. A solução utiliza Arduino Uno, quatro botões físicos coloridos, dois servomotores, LED de status, protoboard e fonte externa de 5V.
 
-Embora o enunciado original previsse o uso do Monitor Serial, a solução física foi adaptada para botões coloridos, mantendo a equivalência dos comandos `U`, `D`, `O` e `C`. Essa adaptação tornou o controle mais intuitivo e adequado à montagem prática realizada.
+Embora o enunciado original previsse o uso do Monitor Serial, a solução física foi adaptada para potenciometros, mantendo a equivalência dos comandos `U`, `D`, `O` e `C`. Essa adaptação tornou o controle mais intuitivo e adequado à montagem prática realizada.
 
 O resultado final é uma solução prática e didática de manipulação robótica, conectada ao tema de operações espaciais, docking, retrieval e microgravidade.
