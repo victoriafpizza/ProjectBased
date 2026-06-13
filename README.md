@@ -10,9 +10,9 @@ Projeto desenvolvido para simular um braço robótico de coleta de amostras, ins
 
 ## Descrição do Projeto
 
-Este projeto consiste em um circuito eletrônico com Arduino Uno, quatro botões físicos coloridos, dois servomotores, um LED branco de status, protoboard e fonte externa de 5V para alimentação dos motores.
+Este projeto consiste em um circuito eletrônico com Arduino Uno, quatro potenciometros, tres servomotores, um LED branco de status, protoboard e fonte externa de 5V para alimentação dos motores.
 
-A proposta original previa que o controle fosse feito pelo Monitor Serial, utilizando comandos como `U`, `D`, `O` e `C`. Na montagem física desenvolvida, esses comandos foram mantidos na lógica do projeto, porém foram representados por botões físicos coloridos. Dessa forma, em vez de digitar os comandos no Monitor Serial, o operador controla o braço robótico pressionando os botões correspondentes.
+A proposta original previa que o controle fosse feito pelo Monitor Serial, utilizando comandos como `U`, `D`, `O` e `C`. Na montagem física desenvolvida, esses comandos foram mantidos na lógica do projeto, porém foram representados por potenciometro. Dessa forma, em vez de digitar os comandos no Monitor Serial, o operador controla o braço robótico pressionando os botões correspondentes.
 
 Essa adaptação tornou a operação mais intuitiva e próxima de um controle físico real, mantendo a mesma lógica funcional solicitada no enunciado.
 
@@ -31,12 +31,12 @@ Neste projeto, o braço robótico representa uma versão didática desse tipo de
 ## Componentes Utilizados
 
 * Arduino Uno
-* 4 botões físicos coloridos
-* 2 servomotores
+* 4 potenciometros
+* 3 servomotores
 * 1 LED branco de status
 * 1 resistor de 220Ω para o LED
 * Fonte externa de 5V para alimentação dos servomotores
-* Protoboard
+* Protoboards
 * Jumpers
 * Modelo 3D em OpenSCAD da garra/gripper
 
@@ -55,10 +55,10 @@ Na versão física, esses comandos são acionados por botões:
 
 | Botão    | Pino Arduino | Comando Representado | Função       |
 | -------- | -----------: | -------------------- | ------------ |
-| Verde    |           D4 | U                    | Subir braço  |
-| Amarelo  |           D2 | D                    | Descer braço |
-| Azul     |           D3 | O                    | Abrir garra  |
-| Vermelho |           D5 | C                    | Fechar garra |
+| 4        |           D4 | U                    | Subir braço  |
+| 2        |           D2 | D                    | Descer braço |
+| 3        |           D3 | O                    | Abrir garra  |
+| 5        |           D5 | C                    | Fechar garra |
 
 ## Justificativa da Adaptação dos Controles
 
@@ -66,10 +66,10 @@ Embora o enunciado original indique o uso do Monitor Serial para envio dos coman
 
 Cada botão representa um comando serial original:
 
-* botão verde representa o comando `U`;
-* botão amarelo representa o comando `D`;
-* botão azul representa o comando `O`;
-* botão vermelho representa o comando `C`.
+* potencioemtro 4 representa o comando `U`;
+* potencioemtro 2 representa o comando `D`;
+* potencioemtro 3 representa o comando `O`;
+* potencioemtro 45 representa o comando `C`.
 
 Assim, a lógica de controle permanece equivalente à proposta original, mas a entrada do usuário ocorre por meio de botões físicos conectados ao Arduino.
 
@@ -124,12 +124,12 @@ O funcionamento do sistema ocorre da seguinte forma:
 4. O LED branco de status acende durante a execução do comando.
 5. O Arduino envia o sinal para o servomotor correspondente.
 6. O servo do braço ou o servo da garra se movimenta.
-7. Quando nenhum botão está pressionado, o LED permanece apagado.
+7. Quando nenhum potenciometro esta em movimento, o LED permanece apagado.
 
 ## Fluxo de Funcionamento
 
 ```txt
-Botões físicos coloridos
+potenciometros
       ↓
 Arduino Uno
       ↓
@@ -161,19 +161,6 @@ Indicação visual de funcionamento do sistema
 O arquivo `diagram.json`, localizado na pasta `/simulator`, representa o circuito no ambiente Wokwi.
 
 Esse arquivo descreve uma versão simulada do circuito eletrônico, com Arduino Uno, botões, servomotores, LED de status, resistor e conexões principais.
-
-**Link público do simulador:** inserir aqui o link público do Wokwi ou Tinkercad.
-
-## Modelagem 3D
-
-A modelagem 3D foi desenvolvida no OpenSCAD. O modelo representa uma garra/gripper do braço robótico, criada de forma paramétrica para permitir ajustes de tamanho e proporção.
-
-O arquivo nativo do modelo está na pasta `/model`.
-
-Arquivos da modelagem:
-
-* `braco_robotico_gripper.scad`: arquivo nativo do OpenSCAD;
-* `braco_robotico_gripper.stl`: arquivo exportado em formato STL.
 
 O modelo 3D complementa a proposta física do projeto, representando a estrutura de manipulação da garra robótica.
 
